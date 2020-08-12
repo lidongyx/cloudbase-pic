@@ -1,4 +1,4 @@
-![cloudbase-pic](D:\codeless\cloudbase-pic\redme\cloudbase-pic.png)
+![cloudbase-pic](redme\cloudbase-pic.png)
 
 # CloudBase-Pic
 基于[云开发 CloudBase](https://cloudbase.net/)的开发图床应用, 使用了云开发的静态存储托管功能，上传图片到云存储。基于 **[CloudBase Framework](https://github.com/TencentCloudBase/cloudbase-framework)** 框架将项目一键部署到云开发环境。页面设计参考`SM.MS`
@@ -8,7 +8,7 @@
 
 ## 截图
 
-![](D:\codeless\cloudbase-pic\redme\preview.png)
+![](redme\preview.png)
 
 ## 部署
 
@@ -33,7 +33,7 @@ npm run dev
 npm run dev
 ```
 
-![](D:\codeless\cloudbase-pic\redme\done.png)
+![](redme\done.png)
 
 :sparkles::sparkles::sparkles:部署成功啦！通过云开发的静态托管域名加/pic，即可访问！
 
