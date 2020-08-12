@@ -30,7 +30,7 @@ npm run dev
 部署到云开发
 
 ```
-npm run dev
+npm run deploy
 ```
 
 ![](https://636f-codeless-0gnhewcwbbca2bba-1251745412.tcb.qcloud.la/cloudbase-pic/40ca_done.png)
