@@ -19,13 +19,38 @@
       </div>
       <el-divider></el-divider>
       <div>
-        <el-upload class="upload-demo" drag action multiple :http-request="uploadFile">
+        <el-upload
+          class="upload-demo"
+          drag
+          action
+          multiple
+          :show-file-list="false"
+          :http-request="uploadFile"
+        >
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">
             将文件拖到此处，或
             <em>点击上传</em>
           </div>
-          <div class="el-upload__tip" slot="tip">上传成功后，可到 History 查看记录，获取外链地址</div>
+          <div
+            v-for="(item,index) in fileList"
+            :key="index"
+            class="el-upload__tip upload-success"
+            slot="tip"
+          >
+            <span
+              class="copy"
+              v-clipboard:copy="item.download_url"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+            >点击复制链接</span>
+            <span
+              class="link"
+              v-clipboard:copy="item.download_url"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+            >{{item.download_url}}</span>
+          </div>
         </el-upload>
       </div>
     </div>
@@ -39,58 +64,60 @@
 export default {
   name: "App",
   data() {
-    return {};
+    return {
+      cloudbasePath: "cloudbase-pic",
+      fileList: [], // 上传成功后的文件列表
+    };
   },
+
   async created() {
     this.envId = this.$cloudbase.config.env;
     try {
       const auth = this.$cloudbase.auth({ persistence: "local" });
-
       if (!auth.hasLoginState()) {
         await auth.anonymousAuthProvider().signIn();
       }
-
-      console.log("用户id", auth.hasLoginState().user.uid);
-
       this.isLoginSuccss = true;
     } catch (e) {
       if (e.message.includes("100007")) {
         this.isLoginSuccss = false;
       }
-      console.error(e);
-      console.log(e.code);
     }
   },
   methods: {
-    // 上传文件
+    // 上传单个文件
     uploadFile(item) {
-      console.log(item.file);
       this.file = item.file;
-      // this.callFunction();
+      const name = this.S4() + "_" + this.file.name;
       this.$cloudbase
         .uploadFile({
-          cloudPath: "/cloudbase-pic/" + this.file.name,
+          cloudPath: this.cloudbasePath + "/" + name,
           filePath: this.file,
         })
         .then((res) => {
           this.fileID = res.fileID;
-          console.log(res.fileID);
+          this.$cloudbase
+            .getTempFileURL({
+              fileList: [res.fileID],
+            })
+            .then((res2) => {
+              this.fileList.push(res2.fileList[0]);
+              this.$message.success("上传成功");
+            });
         });
     },
 
-    async callFunction() {
-      try {
-        const res = await this.$cloudbase.callFunction({
-          name: "vue-echo",
-          data: {
-            foo: "bar",
-          },
-        });
-        console.log(res);
-        this.callFunctionResult = res;
-      } catch (e) {
-        this.callFunctionResult = e.message;
-      }
+    S4() {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    },
+
+    //复制成功时的回调函数
+    onCopy() {
+      this.$message.success("链接已复制到剪切板！");
+    },
+    // 复制失败时的回调函数
+    onError() {
+      this.$message.error("抱歉，复制失败！");
     },
   },
 };
@@ -148,16 +175,11 @@ a {
 .main {
   min-height: 650px;
   grid-area: main;
-  /* background-color: blanchedalmond; */
-}
-
-.main-title {
-  /* height: 100px; */
 }
 
 .main-title h5 {
   font-weight: 500;
-  color: #e6a23c;
+  color: #f56c6c;
 }
 
 .upload-demo >>> .el-upload {
@@ -176,6 +198,28 @@ a {
 
 .upload-demo >>> .el-upload__text {
   font-size: 20px;
+}
+
+.upload-success {
+  height: 25px;
+  line-height: 25px;
+  border-radius: 5px;
+  border: #55b9f3 1px dotted;
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  display: flex;
+}
+
+.upload-success .link {
+  color: #303133;
+}
+
+.upload-success .copy {
+  font-size: 13px;
+  color: #e6a23c;
+  margin-right: 10px;
 }
 
 .bottom {

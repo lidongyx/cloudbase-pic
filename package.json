@@ -19,7 +19,8 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^9.0.3",
     "style-loader": "^1.2.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-clipboard2": "^0.3.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.3.0",
@@ -50,7 +51,7 @@
     "not dead"
   ],
   "vue": {
-    "publicPath": "/vue/",
+    "publicPath": "/pic/",
     "devServer": {
       "port": 5000
     }

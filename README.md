@@ -1,59 +1,45 @@
-<a href="https://github.com/TencentCloudBase/cloudbase-templates"><img src="https://main.qcloudimg.com/raw/9892a3212a49bdd65ba499f2da62ac23.png"></a>
+![cloudbase-pic](D:\codeless\cloudbase-pic\redme\cloudbase-pic.png)
 
-# Vue 全栈应用示例
+# CloudBase-Pic
+基于[云开发 CloudBase](https://cloudbase.net/)的开发图床应用, 使用了云开发的静态存储托管功能，上传图片到云存储。基于 **[CloudBase Framework](https://github.com/TencentCloudBase/cloudbase-framework)** 框架将项目一键部署到云开发环境。页面设计参考`SM.MS`
 
-这个目录是基于云开发的一个 [Vue](https://cn.vuejs.org/) 全栈应用示例，包含 Vue + 云函数 + 静态网站部署，可以基于 **[CloudBase Framework](https://github.com/TencentCloudBase/cloudbase-framework)** 框架将项目一键部署到云开发环境
 
-## 线上演示地址
 
-[https://framework-1258016615.tcloudbaseapp.com/vue/](https://framework-1258016615.tcloudbaseapp.com/vue/)
 
-## 部署一个 Vue 全栈应用
+## 截图
+
+![](D:\codeless\cloudbase-pic\redme\preview.png)
+
+## 部署
 
 ### 步骤一. 准备工作
+云开发相关前置知识 [准备云开发环境和 CloudBase CLI 命令工具](https://github.com/TencentCloudBase/cloudbase-framework/blob/master/CLI_GUIDE.md)
 
-具体步骤请参照 [准备云开发环境和 CloudBase CLI 命令工具](https://github.com/TencentCloudBase/cloudbase-framework/blob/master/CLI_GUIDE.md)
++  修改环境ID。项目根目录中。找到 `cloudbaserc.json` 修改 `envId`
++ （可选）修改部署到静态托管的目录。找到 `cloudbaserc.json` 下的 `@cloudbase/framework-plugin-website 插件下的`的`cloudPath`。默认为 `pic`
++ （可选）修改上传文件到云存储的目录。找到 `src\APP.vue` 中的 `cloudbasePath` 值，默认为 `cloudbase-pic`
 
-### 步骤二. 初始化应用示例
 
-在命令行执行
+### 步骤二. 部署上传
 
+本地预览
 ```
-cloudbase init --template vue
-```
-
-### 步骤三. 一键部署
-
-进入到项目目录，在命令行执行
-
-```
-cloudbase framework:deploy
+npm run dev
 ```
 
-## 开发命令及配置
-
-### 本地开发
+部署到云开发
 
 ```
 npm run dev
 ```
 
-### 上线部署
+![](D:\codeless\cloudbase-pic\redme\done.png)
 
-```
-npm run deploy
-```
+:sparkles::sparkles::sparkles:部署成功啦！通过云开发的静态托管域名加/pic，即可访问！
 
-### Lint
 
-```
-npm run lint
-```
 
-### CloudBase Framework 相关开发配置
+## 计划
 
-查看 [CloudBase Framework 配置](https://github.com/TencentCloudBase/cloudbase-framework).
-
-### Vue 相关开发配置
-
-查看 [Configuration Reference](https://cli.vuejs.org/config/).
+1. 增加用户登录功能，保存用户上传图片历史，在 history 标签下可查看到该用户的所有图片。
+2. 增加对其他云存储的支持，如阿里云OSS，七牛云等

@@ -9,7 +9,7 @@
         "inputs": {
           "buildCommand": "npm run build",
           "outputPath": "dist",
-          "cloudPath": "/vue"
+          "cloudPath": "/pic"
         }
       },
       "server": {
